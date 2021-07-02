@@ -29,7 +29,7 @@ public class Message {
                 wait();
             }
             catch (InterruptedException exception) {
-
+                System.out.println("Write thread interrupted");
             }
         }
         this.message=message;

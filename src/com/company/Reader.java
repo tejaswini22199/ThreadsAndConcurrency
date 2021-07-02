@@ -20,7 +20,7 @@ public class Reader implements Runnable{
             }
             catch(InterruptedException exception)
             {
-
+                System.out.println("Read thread interrupted");
             }
         }
     }
