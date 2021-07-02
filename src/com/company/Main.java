@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class Main {
 
@@ -12,10 +13,16 @@ public class Main {
         (new Thread(new Reader(message))).start();
         System.out.println("read");
         List<String> buffer=new ArrayList<>();
-        MyProducer producer=new MyProducer(buffer);
-        MyConsumer consumer=new MyConsumer(buffer);
-        (new Thread(producer)).start();
-        (new Thread(consumer)).start();
+//        MyProducer producer=new MyProducer(buffer);
+//        MyConsumer consumer=new MyConsumer(buffer);
+//        (new Thread(producer)).start();
+//        (new Thread(consumer)).start();
+       // List<String> buffer=new ArrayList<>();
+        ReentrantLock bufferLock=new ReentrantLock();
+        ProducerWithBufferLock producerWithBufferLock=new ProducerWithBufferLock(buffer,bufferLock);
+        ConsumerWithBufferLock consumerWithBufferLock=new ConsumerWithBufferLock(buffer,bufferLock);
+        (new Thread(producerWithBufferLock)).start();
+        (new Thread(consumerWithBufferLock)).start();
 
 
 
