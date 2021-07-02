@@ -16,22 +16,23 @@ public class ConsumerWithBufferLock implements Runnable {
     {
         while (true)
         {
-            bufferLock.lock();
-            if(buffer.isEmpty())
-            {
-                bufferLock.unlock();
-                continue;
+            try {
+                bufferLock.lock();
+                if (buffer.isEmpty()) {
+                    // bufferLock.unlock();
+                    continue;
+                }
+                if (buffer.get(0).equals("EOF")) {
+                    System.out.println("Nothing to read");
+                    //  bufferLock.unlock();
+                    break;
+                } else {
+                    System.out.println("Reading" + buffer.remove(0));
+                }
             }
-            if(buffer.get(0).equals("EOF"))
-            {
-                System.out.println("Nothing to read");
-                bufferLock.unlock();
-                break;
-            }
-            else{
-                System.out.println("Reading"+buffer.remove(0));
-            }
+            finally{
             bufferLock.unlock();
+        }
         }
 
     }

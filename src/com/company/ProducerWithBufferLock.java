@@ -20,12 +20,15 @@ public class ProducerWithBufferLock implements Runnable {
                 System.out.println("Adding"+message);
                 bufferLock.lock();
                 buffer.add(message);
-                bufferLock.unlock();
+
                 Thread.sleep(2000);
             }
 
             catch(InterruptedException exception){
                 System.out.println("Producer interrupted");
+            }
+            finally {
+                bufferLock.unlock();
             }
         }
         System.out.println("Adding EOF");
